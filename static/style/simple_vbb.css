@@ -1,10 +1,17 @@
 div.row {
   margin: 15px auto;
+  padding: 5px;
   background: #F5F5F5;
 }
 .product {
-  padding: 5px;
+  padding: 8px;
+  margin: 4px;
   line-height: 50px;
+}
+.product-walk {
+  color: black;
+  background: #ffec00;
+  /* border: 1px solid #ff6f00; */
 }
 .product-bus {
   color: white;

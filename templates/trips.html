@@ -25,18 +25,22 @@
 					<br>
 					{{ (trip["LegList"]["Leg"] | last)["Destination"]["time"] }} an
 				</div>
-				<div class="two columns">
+				<div class="three columns">
 					{% for leg in trip["LegList"]["Leg"] %}
-						{% if "S" in leg["name"] %}
-							<span class="product product-sbahn">{{ leg["name"] }}</span>
-						{% elif "Bus" in leg["name"] %}
-							<span class="product product-bus">{{ leg["name"] }}</span>
-						{% elif "RE" in leg["name"] %}
-							<span class="product product-re">{{ leg["name"] }}</span>
-						{% elif "U" in leg["name"] %}
-							<span class="product product-u">{{ leg["name"] }}</span>
-						{% else %}
-							<span class="product product-unknown">{{ leg["name"] }}</span>
+						{% if leg["type"] == "WALK" %}
+							<span class="product product-walk">🚶</span>
+						{% elif leg["type"] == "JNY" %}
+							{% if "S" in leg["name"] %}
+								<span class="product product-sbahn">{{ leg["name"] }}</span>
+							{% elif "B" in leg["name"] %}
+								<span class="product product-bus">{{ leg["name"] }}</span>
+							{% elif "RE" in leg["name"] %}
+								<span class="product product-re">{{ leg["name"] }}</span>
+							{% elif "U" in leg["name"] %}
+								<span class="product product-u">{{ leg["name"] }}</span>
+							{% else %}
+								<span class="product product-unknown">{{ leg["name"] }}</span>
+							{% endif %}
 						{% endif %}
 					{% endfor %}
 				</div>
