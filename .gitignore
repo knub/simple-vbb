@@ -1,6 +1,7 @@
 ### Project-specific ignores
 *.pdf
 access_key.txt
+debug.json
 
 ### General Python ignores
 # Byte-compiled / optimized / DLL files
