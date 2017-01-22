@@ -21,7 +21,7 @@ def root():
 @app.route("/trips")
 def trips():
     trips = vbb.get_trip(FROM_ID, TO_ID)
-    return render_template("trips.html", trips=trips)
+    return render_template("trips.html", trips=trips, from_station=FROM, to_station=TO)
 
 if __name__ == "__main__":
     app.run()

@@ -1,0 +1,31 @@
+div.row {
+  margin: 15px auto;
+  background: #F5F5F5;
+}
+.product {
+  padding: 5px;
+  line-height: 50px;
+}
+.product-bus {
+  color: white;
+  background: #a5037c;
+}
+.product-re {
+  color: white;
+  background: #e2001a;
+}
+.product-sbahn {
+  color: white;
+  background: #008c4f;
+}
+.product-u {
+  color: white;
+  background: #0066ac;
+}
+.product-unknown {
+  color: black;
+  background: white;
+}
+.duration {
+  line-height: 50px;
+}

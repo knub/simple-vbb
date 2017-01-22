@@ -25,8 +25,8 @@ class Vbb:
         params = self.base_request.copy()
         params["input"] = search_str
         r = requests.get('http://demo.hafas.de/openapi/vbb-proxy/location.name', params=params)
-        j = json.loads(r.text)
-        station_ext_id = j["stopLocationOrCoordLocation"][0]["StopLocation"]["extId"]
+        # print(json.dumps(r.json()["stopLocationOrCoordLocation"], indent=4))
+        station_ext_id = r.json()["stopLocationOrCoordLocation"][0]["StopLocation"]["extId"]
         return station_ext_id
 
     def get_trip(self, from_ext_id, to_ext_id):
@@ -37,5 +37,10 @@ class Vbb:
         r = requests.get('http://demo.hafas.de/openapi/vbb-proxy/trip', params=params)
         with open("debug.json", "w") as f:
             json.dump(r.json(), f)
-        return r.json()["Trip"]
-        # return json.dumps(r.json()["Trip"], indent=4)
+        trips = r.json()["Trip"]
+        for trip in trips:
+            trip["duration"] = trip["duration"].replace("PT", "").replace("M", "")
+            for leg in trip["LegList"]["Leg"]:
+                # leg["name"] = leg["name"].replace("Bus", "")
+                pass
+        return trips
