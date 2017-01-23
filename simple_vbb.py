@@ -5,8 +5,8 @@ import re
 from simple_vbb.vbb import Vbb, DummyVbb
 
 app = Flask(__name__)
-# vbb = Vbb()
-vbb = DummyVbb()
+vbb = Vbb()
+# vbb = DummyVbb()
 
 FROM = "S Nikolassee"
 FROM = "Pfaueninselchausee"
@@ -82,8 +82,8 @@ class TripsViewModel:
                 minutes = int(duration[h_index + 1:m_index])
                 trip["duration"] = "%s:%02d" % (hours, minutes)
             else:
-                minutes = duration.replace("M", "")
-                trip["duration"] = "0:%s" % minutes
+                minutes = int(duration.replace("M", ""))
+                trip["duration"] = "0:%02d" % minutes
             # trip["duration"] = trip["duration"].replace("PT", "").replace("M", "")
             for leg in trip["LegList"]["Leg"]:
                 self.prepare_delay_info(leg)
