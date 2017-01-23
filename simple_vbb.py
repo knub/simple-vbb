@@ -5,8 +5,8 @@ import re
 from simple_vbb.vbb import Vbb, DummyVbb
 
 app = Flask(__name__)
-# vbb = Vbb()
-vbb = DummyVbb()
+vbb = Vbb()
+# vbb = DummyVbb()
 
 FROM = "S Nikolassee"
 FROM = "Pfaueninselchausee"
@@ -17,6 +17,17 @@ TO = "Ahrensfelde"
 TO = "U Stadtmitte"
 FROM_ID = vbb.get_station_ext_id(FROM)
 TO_ID = vbb.get_station_ext_id(TO)
+
+str_to_ext_id_cache = {}
+
+
+def resolve_station(search_str):
+    if search_str in str_to_ext_id_cache:
+        return str_to_ext_id_cache[search_str]
+    else:
+        ext_id = vbb.get_station_ext_id(search_str)
+        str_to_ext_id_cache[search_str] = ext_id
+        return ext_id
 
 
 class TripsViewModel:
@@ -89,6 +100,14 @@ class TripsViewModel:
 def root():
     text = vbb.get_trip(FROM_ID, TO_ID)
     return render_template("main.html", text=text)
+
+
+@app.route("/<from_station>-to-<to_station>")
+def fromto(from_station=None, to_station=None):
+    from_id = resolve_station(from_station)
+    to_id = resolve_station(to_station)
+    trips = TripsViewModel(vbb.get_trip(from_id, to_id))
+    return render_template("trips.html", trips=trips, from_station=from_station.capitalize(), to_station=to_station.capitalize())
 
 
 @app.route("/trips")
