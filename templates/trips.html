@@ -65,21 +65,32 @@
 				</div>
 				<div class="three columns trip-products">
 					{% for leg in trip["LegList"]["Leg"] %}
-						{% if leg["type"] == "WALK" %}
-							<span class="product product-walk">🚶</span>
-						{% elif leg["type"] == "JNY" %}
-							{% if "S" in leg["name"] %}
-								<span class="product product-sbahn">{{ leg["name"] }}</span>
-							{% elif "B" in leg["name"] %}
-								<span class="product product-bus">{{ leg["name"] }}</span>
-							{% elif "RE" in leg["name"] %}
-								<span class="product product-re">{{ leg["name"] }}</span>
-							{% elif "U" in leg["name"] %}
-								<span class="product product-u">{{ leg["name"] }}</span>
-							{% else %}
-								<span class="product product-unknown">{{ leg["name"] }}</span>
+							{% if leg["type"] == "WALK" and (loop.first or loop.last) %}
+								<div class="part-trip">
+									<span class="product product-walk">🚶</span>
+								</div>
 							{% endif %}
-						{% endif %}
+							{% if leg["type"] == "JNY" %}
+								<div class="part-trip">
+									{% if "S" in leg["name"] %}
+										<span class="product product-sbahn">{{ leg["name"] }}</span>
+									{% elif "B" in leg["name"] %}
+										<span class="product product-bus">{{ leg["name"] }}</span>
+									{% elif "RE" in leg["name"] %}
+										<span class="product product-re">{{ leg["name"] }}</span>
+									{% elif "U" in leg["name"] %}
+										<span class="product product-u">{{ leg["name"] }}</span>
+									{% else %}
+										<span class="product product-unknown">{{ leg["name"] }}</span>
+									{% endif %}
+									{% if not loop.last %}
+										{% set next_leg = trip["LegList"]["Leg"][loop.index0 + 1] %}
+										{% if next_leg["type"] == "WALK" %}
+											<span class="product product-walk">🚶</span>
+										{% endif %}
+									{% endif %}
+								</div>
+							{% endif %}
 					{% endfor %}
 				</div>
 				<!-- <div class="one column">test</div> -->

@@ -1,3 +1,6 @@
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
 h1 {
   background: #e6ebed;
   font-weight: bold;
@@ -35,6 +38,7 @@ div.row:hover {
 .product {
   padding: 7px;
   margin: 4px;
+  white-space: nowrap;
 }
 .product-walk {
   color: black;
@@ -65,26 +69,23 @@ div.row:hover {
 .delay-on-time {
   display: inline-block;
   width: 40px;
-
   text-align: center;
+  border-radius: 10px;
+  line-height: 130%;
 
   color: green;
-  border-radius: 10px;
-  margin: 2px;
-  /* border-radius: 100px; */
-  /* padding: 2px 10px; */
+  position: relative;
+  top: -1px;
 }
 .delay-delayed {
   display: inline-block;
   width: 40px;
   text-align: center;
-  margin: 2px;
+  border-radius: 10px;
+  line-height: 130%;
 
   color: white;
   background: #de1616;
-
-  border-radius: 10px;
-  /* padding: 2px 10px; */
 }
 footer {
   text-align: right;
