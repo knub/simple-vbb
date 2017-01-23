@@ -3,6 +3,9 @@ div.row {
   padding: 5px;
   background: #F5F5F5;
 }
+div.part-trip {
+  margin-bottom: 8px;
+}
 .product {
   padding: 8px;
   margin: 4px;
