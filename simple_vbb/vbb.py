@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import requests
 
@@ -11,10 +12,15 @@ class Vbb:
             self.access_key = self._read_access_key()
         except:
             raise Exception('Expecting access key file %s' % ACCESS_KEY_FILE)
-        self.base_request = {
+
+    def build_base_request(self):
+        now = datetime.now()
+        return {
             'accessId': self.access_key,
             'lang': 'en',
             'format': 'json',
+            'date': now.strftime("%Y-%m-%d"),
+            'time': now.strftime("%H:%M"),
         }
 
     def _read_access_key(self):
@@ -22,17 +28,20 @@ class Vbb:
             return f.read().replace('\n', '')
 
     def get_station_ext_id(self, search_str):
-        params = self.base_request.copy()
-        params["input"] = search_str
+        params = self.build_base_request()
+        params.update({
+            'input': search_str,
+        })
         r = requests.get('http://demo.hafas.de/openapi/vbb-proxy/location.name', params=params)
-        # print(json.dumps(r.json()["stopLocationOrCoordLocation"], indent=4))
         station_ext_id = r.json()["stopLocationOrCoordLocation"][0]["StopLocation"]["extId"]
         return station_ext_id
 
     def get_trip(self, from_ext_id, to_ext_id):
-        params = self.base_request.copy()
-        params["originExtId"] = from_ext_id
-        params["destExtId"] = to_ext_id
+        params = self.build_base_request()
+        params.update({
+            'originExtId': from_ext_id,
+            'destExtId': to_ext_id,
+        })
 
         r = requests.get('http://demo.hafas.de/openapi/vbb-proxy/trip', params=params)
         with open("debug.json", "w") as f:
