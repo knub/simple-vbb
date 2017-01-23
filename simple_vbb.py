@@ -12,8 +12,8 @@ FROM = "S Nikolassee"
 FROM = "Pfaueninselchausee"
 FROM = "Teltow, Bahnhof"
 FROM = "S Wannsee"
-TO = "Ahrensfelde"
 TO = "Jüterbog, Bahnhof"
+TO = "Ahrensfelde"
 TO = "U Stadtmitte"
 FROM_ID = vbb.get_station_ext_id(FROM)
 TO_ID = vbb.get_station_ext_id(TO)
@@ -62,7 +62,18 @@ class TripsViewModel:
 
     def augment_trips(self):
         for trip in self.trips:
-            trip["duration"] = trip["duration"].replace("PT", "").replace("M", "")
+            duration = trip["duration"]
+            duration = duration.replace("PT", "")
+            if "H" in duration:
+                h_index = duration.index("H")
+                m_index = duration.index("M")
+                hours = duration[:h_index]
+                minutes = int(duration[h_index + 1:m_index])
+                trip["duration"] = "%s:%02d" % (hours, minutes)
+            else:
+                minutes = duration.replace("M", "")
+                trip["duration"] = "0:%s" % minutes
+            # trip["duration"] = trip["duration"].replace("PT", "").replace("M", "")
             for leg in trip["LegList"]["Leg"]:
                 self.prepare_delay_info(leg)
                 self.prepare_station_names(leg)
