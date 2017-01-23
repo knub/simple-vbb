@@ -72,7 +72,7 @@ class TripsViewModel:
                 trip["duration"] = "%s:%02d" % (hours, minutes)
             else:
                 minutes = int(duration.replace("M", ""))
-                trip["duration"] = "0:%02ds" % minutes
+                trip["duration"] = "0:%02d" % minutes
             # trip["duration"] = trip["duration"].replace("PT", "").replace("M", "")
             for leg in trip["LegList"]["Leg"]:
                 self.prepare_delay_info(leg)
@@ -96,9 +96,9 @@ def fromto(from_station=None, to_station=None):
 if __name__ == "__main__":
     try:
         vbb = Vbb()
+        # vbb = DummyVbb()
     except AccessKeyMissingException:
         print("Missing access_key.txt. Exiting.")
         sys.exit()
 
-    # vbb = DummyVbb()
     app.run()

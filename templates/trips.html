@@ -16,9 +16,9 @@
 		<h1>{{ from_station }} ➜ {{ to_station }}</h1>
 		{% for trip in trips %}
 			<div class="row">
-				<div class="four columns">
+				<div class="five columns">
 					{% for leg in trip["LegList"]["Leg"] %}
-						{% if leg["type"] == "JNY" %}
+						{% if leg["type"] == "JNY" or loop.first or loop.last %}
 							<div class="part-trip">
 								{% if loop.first %}
 									<span class="trip-start-end">{{ leg["Origin"]["name"] }}</span>
@@ -38,7 +38,7 @@
 				</div>
 				<div class="two columns">
 					{% for leg in trip["LegList"]["Leg"] %}
-						{% if leg["type"] == "JNY" %}
+						{% if leg["type"] == "JNY" or loop.first or loop.last %}
 							<div class="part-trip">
 								{{ leg["Origin"]["time"] }}
 								{% if leg["Origin"]["delay"] != None %}
