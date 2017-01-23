@@ -90,7 +90,7 @@ def fromto(from_station=None, to_station=None):
     from_id = resolve_station(from_station)
     to_id = resolve_station(to_station)
     trips = TripsViewModel(vbb.get_trip(from_id, to_id))
-    return render_template("trips.html", trips=trips, from_station=from_station.capitalize(), to_station=to_station.capitalize())
+    return render_template("trips.html", trips=trips, from_station=from_station.title(), to_station=to_station.title())
 
 
 if __name__ == "__main__":
