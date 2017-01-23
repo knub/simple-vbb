@@ -32,8 +32,22 @@
 						{% if leg["type"] == "JNY" %}
 							<div class="part-trip">
 								{{ leg["Origin"]["time"] }}
+								{% if leg["Origin"]["delay"] != None %}
+									{% if leg["Origin"]["delay"] == 0 %}
+										<span class="delay-on-time">◉</span>
+									{% else %}
+										<span class="delay-delayed">{{ "%+d" | format(leg["Origin"]["delay"]) }}</span>
+									{% endif %}
+								{% endif %}
 								<br>
 								{{ leg["Destination"]["time"] }}
+								{% if leg["Destination"]["delay"] != None %}
+									{% if leg["Destination"]["delay"] == 0 %}
+										<span class="delay-on-time">◉</span>
+									{% else %}
+										<span class="delay-delayed">{{ "%+d" | format(leg["Destination"]["delay"]) }}</span>
+									{% endif %}
+								{% endif %}
 								<br>
 							</div>
 						{% endif %}

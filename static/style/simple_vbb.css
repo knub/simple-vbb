@@ -39,3 +39,14 @@ div.part-trip {
 .duration {
   line-height: 50px;
 }
+
+.delay-on-time {
+  color: green;
+  padding: 2px;
+}
+.delay-delayed {
+  color: white;
+  background: #de1616;
+  border-radius: 100px;
+  padding: 2px;
+}
