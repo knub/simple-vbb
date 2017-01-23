@@ -60,10 +60,6 @@ class TripsViewModel:
         dest_delay = calculate_delay("Destination")
         leg["Destination"]["delay"] = dest_delay
 
-        # s = leg["Origin"]["date"]
-        # print(s)
-        # print(datetime.strptime(s, "%y-%m-%d"))
-
     def augment_trips(self):
         for trip in self.trips:
             trip["duration"] = trip["duration"].replace("PT", "").replace("M", "")
@@ -72,7 +68,7 @@ class TripsViewModel:
                 self.prepare_station_names(leg)
                 self.prepare_times(leg)
                 # Fix time
-                leg["name"] = leg["name"].replace("Bus ", "B").strip()
+                leg["name"] = leg["name"].strip()
 
     def __iter__(self):
         return iter(self.trips)

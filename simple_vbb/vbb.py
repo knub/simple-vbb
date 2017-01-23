@@ -58,7 +58,7 @@ class DummyVbb:
     """
 
     def get_trip(self, from_ext_id, to_ext_id):
-        with open("sample_responses/delay.json") as f:
+        with open("sample_responses/pic_to_alex.json") as f:
             return json.load(f)["Trip"]
 
     def get_station_ext_id(self, search_str):
