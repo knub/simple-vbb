@@ -53,6 +53,7 @@
 								{% if leg["Destination"]["delay"] != None %}
 									{% if leg["Destination"]["delay"] == 0 %}
 										<span class="delay-on-time">◉</span>
+										<!-- <span class="delay-on-time">±0</span> -->
 									{% else %}
 										<span class="delay-delayed">{{ "%+d" | format(leg["Destination"]["delay"]) }}</span>
 									{% endif %}
@@ -62,7 +63,7 @@
 						{% endif %}
 					{% endfor %}
 				</div>
-				<div class="three columns">
+				<div class="three columns trip-products">
 					{% for leg in trip["LegList"]["Leg"] %}
 						{% if leg["type"] == "WALK" %}
 							<span class="product product-walk">🚶</span>
@@ -81,7 +82,8 @@
 						{% endif %}
 					{% endfor %}
 				</div>
-				<div class="two columns duration">
+				<!-- <div class="one column">test</div> -->
+				<div class="two columns trip-duration">
 					{{ trip["duration"] }}
 				</div>
 			</div>

@@ -5,8 +5,8 @@ import re
 from simple_vbb.vbb import Vbb, DummyVbb
 
 app = Flask(__name__)
-vbb = Vbb()
-# vbb = DummyVbb()
+# vbb = Vbb()
+vbb = DummyVbb()
 
 FROM = "S Nikolassee"
 FROM = "Pfaueninselchausee"
