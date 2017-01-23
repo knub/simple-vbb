@@ -5,13 +5,17 @@ import requests
 ACCESS_KEY_FILE = 'access_key.txt'
 
 
+class AccessKeyMissingException(Exception):
+    pass
+
+
 class Vbb:
 
     def __init__(self):
         try:
             self.access_key = self._read_access_key()
         except:
-            raise Exception('Expecting access key file %s' % ACCESS_KEY_FILE)
+            raise AccessKeyMissingException('Expecting access key file %s' % ACCESS_KEY_FILE)
 
     def build_base_request(self):
         now = datetime.now()

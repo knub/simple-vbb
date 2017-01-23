@@ -1,8 +1,9 @@
 from datetime import datetime
 from flask import Flask, render_template
 import re
+import sys
 
-from simple_vbb.vbb import Vbb, DummyVbb
+from simple_vbb.vbb import Vbb, DummyVbb, AccessKeyMissingException
 
 app = Flask(__name__)
 
@@ -91,7 +92,13 @@ def fromto(from_station=None, to_station=None):
     trips = TripsViewModel(vbb.get_trip(from_id, to_id))
     return render_template("trips.html", trips=trips, from_station=from_station.capitalize(), to_station=to_station.capitalize())
 
+
 if __name__ == "__main__":
-    vbb = Vbb()
+    try:
+        vbb = Vbb()
+    except AccessKeyMissingException:
+        print("Missing access_key.txt. Exiting.")
+        sys.exit()
+
     # vbb = DummyVbb()
     app.run()
