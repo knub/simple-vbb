@@ -23,6 +23,7 @@ div.row:hover {
 }
 .part-trip {
   margin: 4px auto;
+  height: 50px;
 }
 .trip-products {
   text-align: left;

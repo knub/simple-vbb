@@ -40,7 +40,7 @@
 					{% for leg in trip["LegList"]["Leg"] %}
 						{% if leg["type"] == "JNY" or loop.first or loop.last %}
 							<div class="part-trip">
-								{{ leg["Origin"]["time"] }}
+								<span>{{ leg["Origin"]["time"] }}</span>
 								{% if leg["Origin"]["delay"] != None %}
 									{% if leg["Origin"]["delay"] == 0 %}
 										<span class="delay-on-time">◉</span>
@@ -49,7 +49,7 @@
 									{% endif %}
 								{% endif %}
 								<br>
-								{{ leg["Destination"]["time"] }}
+								<span>{{ leg["Destination"]["time"] }}</span>
 								{% if leg["Destination"]["delay"] != None %}
 									{% if leg["Destination"]["delay"] == 0 %}
 										<span class="delay-on-time">◉</span>
