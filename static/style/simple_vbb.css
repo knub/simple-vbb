@@ -1,15 +1,32 @@
+h1 {
+  background: #e6ebed;
+  font-weight: bold;
+  text-align: center;
+}
 div.row {
-  margin: 15px auto;
   padding: 5px;
-  background: #F5F5F5;
+  background: white;
+  border-bottom: 2px dotted #e6ebed;
+}
+div.row:nth-child(odd) {
+  padding: 5px;
+  background: #F9F9F9;
+}
+div.row:hover {
+  background: #e6ebed;
+}
+.trip-start-end {
+}
+.trip-intermediate-stop {
+  margin-left: 10px;
+  color: gray;
 }
 div.part-trip {
-  margin-bottom: 8px;
+  margin: 4px auto;
 }
 .product {
-  padding: 8px;
+  padding: 4px;
   margin: 4px;
-  line-height: 50px;
 }
 .product-walk {
   color: black;
@@ -49,4 +66,8 @@ div.part-trip {
   background: #de1616;
   border-radius: 100px;
   padding: 2px;
+}
+footer {
+  text-align: right;
+  font-size: 0.8em;
 }

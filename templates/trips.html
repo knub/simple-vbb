@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="/static/style/normalize.css">
 	<link rel="stylesheet" href="/static/style/skeleton.css">
 	<link rel="stylesheet" href="/static/style/simple_vbb.css">
-	<script src="/static/js/scripts.js"></script>
+	<!-- <script src="/static/js/scripts.js"></script> -->
 </head>
 <body>
 	<div class="container">
@@ -19,9 +19,17 @@
 					{% for leg in trip["LegList"]["Leg"] %}
 						{% if leg["type"] == "JNY" %}
 							<div class="part-trip">
-								{{ leg["Origin"]["name"] }}
+								{% if loop.first %}
+									<span class="trip-start-end">{{ leg["Origin"]["name"] }}</span>
+								{% else %}
+									<span class="trip-intermediate-stop">{{ leg["Origin"]["name"] }}</span>
+								{% endif %}
 								<br>
-								{{ leg["Destination"]["name"] }}
+								{% if loop.last %}
+									<span class="trip-start-end">{{ leg["Destination"]["name"] }}</span>
+								{% else %}
+									<span class="trip-intermediate-stop">{{ leg["Destination"]["name"] }}</span>
+								{% endif %}
 								<br>
 							</div>
 						{% endif %}
@@ -77,10 +85,10 @@
 				</div>
 			</div>
 		{% endfor %}
-		<hr>
-		<div>
+		<footer>
+			<hr>
 			Powered by VBB GmbH. Alle Angaben ohne Gewähr.
-		</div>
+		</footer>
 	</div>
 </body>
 </html>
