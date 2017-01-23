@@ -73,7 +73,6 @@ class TripsViewModel:
             else:
                 minutes = int(duration.replace("M", ""))
                 trip["duration"] = "0:%02d" % minutes
-            # trip["duration"] = trip["duration"].replace("PT", "").replace("M", "")
             for leg in trip["LegList"]["Leg"]:
                 self.prepare_delay_info(leg)
                 self.prepare_station_names(leg)
