@@ -18,6 +18,7 @@
 			<div class="row">
 				<div class="five columns">
 					{% for leg in trip["LegList"]["Leg"] %}
+						{# do not display WALK legs, unless they're the first or last sub-trip #}
 						{% if leg["type"] == "JNY" or loop.first or loop.last %}
 							<div class="part-trip">
 								{% if loop.first %}
@@ -82,6 +83,7 @@
 									{% else %}
 										<span class="product product-unknown">{{ leg["name"] }}</span>
 									{% endif %}
+									{# if a trip is followed by a WALK, add it directly to the current line instead of wasting an entire line for the walk #}
 									{% if not loop.last %}
 										{% set next_leg = trip["LegList"]["Leg"][loop.index0 + 1] %}
 										{% if next_leg["type"] == "WALK" %}
