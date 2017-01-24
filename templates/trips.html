@@ -73,9 +73,9 @@
 								<div class="part-trip">
 									{% if "S" in leg["name"] %}
 										<span class="product product-sbahn">{{ leg["name"] }}</span>
-									{% elif "B" in leg["name"] %}
+									{% elif "Bus" in leg["name"] %}
 										<span class="product product-bus">{{ leg["name"] }}</span>
-									{% elif "RE" in leg["name"] %}
+									{% elif "RE" in leg["name"] or "RB" in leg["name"]  %}
 										<span class="product product-re">{{ leg["name"] }}</span>
 									{% elif "U" in leg["name"] %}
 										<span class="product product-u">{{ leg["name"] }}</span>
