@@ -23,12 +23,13 @@ class TripsViewModel:
 
     def __init__(self, trips):
         self.trips = trips
-
-        # removes underground suffix from station names, e.g. "U Stadtmitte U2" --> "U Stadtmitte"
-        self.remove_u_regex = re.compile(" U\\d")
         self.augment_trips()
 
     def prepare_station_names(self, leg):
+        """Removes clutter from the station names, such as "(Bln)", "[U2]" etc."""
+        # removes underground suffix from station names, e.g. "U Stadtmitte U2" --> "U Stadtmitte"
+        remove_u_regex = re.compile(" U\\d")
+
         def clean_station_name(s):
             s = s \
                 .replace(" (Bln)", "") \
@@ -37,16 +38,18 @@ class TripsViewModel:
                 .replace("[", "") \
                 .replace("]", "") \
 
-            s = self.remove_u_regex.sub("", s)
+            s = remove_u_regex.sub("", s)
             return s.strip()
         leg["Origin"]["name"] = clean_station_name(leg["Origin"]["name"])
         leg["Destination"]["name"] = clean_station_name(leg["Destination"]["name"])
 
     def prepare_times(self, leg):
+        """Prepares arrival and departure times for displaying in the view."""
         leg["Origin"]["time"] = leg["Origin"]["time"][:-3]
         leg["Destination"]["time"] = leg["Destination"]["time"][:-3]
 
     def prepare_delay_info(self, leg):
+        """Calculates delay from scheduled time and real-time predictions."""
         def calculate_delay(station):
             if "rtTime" in leg[station]:
                 start_planned = datetime.strptime("%s %s" % (leg[station]["date"], leg[station]["time"]), "%Y-%m-%d %H:%M:%S")
@@ -60,25 +63,28 @@ class TripsViewModel:
         dest_delay = calculate_delay("Destination")
         leg["Destination"]["delay"] = dest_delay
 
+    def prepare_duration(self, trip):
+        """Prepares the trip duration for displaying in the view."""
+        # Original format: PT1H2M --> 1 hour, 2 minutes
+        duration = trip["duration"]
+        duration = duration.replace("PT", "")
+        if "H" in duration:
+            h_index = duration.index("H")
+            m_index = duration.index("M")
+            hours = duration[:h_index]
+            minutes = int(duration[h_index + 1:m_index])
+            trip["duration"] = "%s:%02d" % (hours, minutes)
+        else:
+            minutes = int(duration.replace("M", ""))
+            trip["duration"] = "0:%02d" % minutes
+
     def augment_trips(self):
         for trip in self.trips:
-            duration = trip["duration"]
-            duration = duration.replace("PT", "")
-            if "H" in duration:
-                h_index = duration.index("H")
-                m_index = duration.index("M")
-                hours = duration[:h_index]
-                minutes = int(duration[h_index + 1:m_index])
-                trip["duration"] = "%s:%02d" % (hours, minutes)
-            else:
-                minutes = int(duration.replace("M", ""))
-                trip["duration"] = "0:%02d" % minutes
+            self.prepare_duration(trip)
             for leg in trip["LegList"]["Leg"]:
                 self.prepare_delay_info(leg)
                 self.prepare_station_names(leg)
                 self.prepare_times(leg)
-                # Fix time
-                leg["name"] = leg["name"].strip()
 
     def __iter__(self):
         return iter(self.trips)
