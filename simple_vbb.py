@@ -106,4 +106,4 @@ if __name__ == "__main__":
         print("Missing access_key.txt. Exiting.")
         sys.exit()
 
-    app.run()
+    app.run(host='0.0.0.0')
