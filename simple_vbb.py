@@ -98,6 +98,15 @@ def fromto(from_station=None, to_station=None):
     return render_template("trips.html", trips=trips, from_station=from_station.title(), to_station=to_station.title())
 
 
+@app.route("/<from_station>-to-<to_station>-via-<via_station>")
+def fromtovia(from_station=None, to_station=None, via_station=None):
+    from_id = resolve_station(from_station)
+    to_id = resolve_station(to_station)
+    via_id = resolve_station(via_station)
+    trips = TripsViewModel(vbb.get_trip_via(from_id, to_id, via_id))
+    return render_template("trips.html", trips=trips, from_station=from_station.title(), to_station=to_station.title())
+
+
 if __name__ == "__main__":
     try:
         vbb = Vbb()

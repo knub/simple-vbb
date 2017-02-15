@@ -54,6 +54,21 @@ class Vbb:
         trips = r.json()["Trip"]
         return trips
 
+    def get_trip_via(self, from_ext_id, to_ext_id, via_ext_id):
+        params = self.build_base_request()
+        params.update({
+            'originExtId': from_ext_id,
+            'destExtId': to_ext_id,
+            'viaId': via_ext_id,
+        })
+
+        r = requests.get('http://demo.hafas.de/openapi/vbb-proxy/trip', params=params)
+        with open("debug.json", "w") as f:
+            json.dump(r.json(), f)
+
+        trips = r.json()["Trip"]
+        return trips
+
 
 class DummyVbb:
     """
@@ -62,6 +77,10 @@ class DummyVbb:
     """
 
     def get_trip(self, from_ext_id, to_ext_id):
+        with open("sample_responses/pic_to_alex.json") as f:
+            return json.load(f)["Trip"]
+
+    def get_trip_via(self, from_ext_id, to_ext_id, via_ext_id):
         with open("sample_responses/pic_to_alex.json") as f:
             return json.load(f)["Trip"]
 
