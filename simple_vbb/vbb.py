@@ -1,5 +1,6 @@
 from datetime import datetime
 import json
+import os
 import requests
 
 ACCESS_KEY_FILE = 'access_key.txt'
@@ -28,7 +29,8 @@ class Vbb:
         }
 
     def _read_access_key(self):
-        with open('access_key.txt', 'r') as f:
+        key_fname = '%s/../access_key.txt' % os.path.dirname(__file__)
+        with open(key_fname, 'r') as f:
             return f.read().replace('\n', '')
 
     def get_station_ext_id(self, search_str):
@@ -37,7 +39,11 @@ class Vbb:
             'input': search_str,
         })
         r = requests.get('http://demo.hafas.de/openapi/vbb-proxy/location.name', params=params)
-        station_ext_id = r.json()["stopLocationOrCoordLocation"][0]["StopLocation"]["extId"]
+        try:
+            station_ext_id = r.json()["stopLocationOrCoordLocation"][0]["StopLocation"]["extId"]
+        except:
+            print r.text
+            raise
         return station_ext_id
 
     def get_trip(self, from_ext_id, to_ext_id):
